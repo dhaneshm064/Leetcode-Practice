@@ -16,7 +16,6 @@ class Solution {
             int output = 0;
              while(ptr1 < l1 && ptr2 < l2)
             {
-                 System.out.println("ptr1 "+ptr1+" ptr2 "+ptr2+" ptr"+ptr);
                 if(nums1[ptr1] < nums2[ptr2])
                 {
                     if(ptr == elem1 || ptr == elem2)
@@ -44,7 +43,6 @@ class Solution {
                 ptr2++;
                 ptr++;
             }
-            System.out.println(output);
             return (double)output/2;
             
             
