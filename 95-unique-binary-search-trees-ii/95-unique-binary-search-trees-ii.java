@@ -20,13 +20,14 @@ class Solution {
         int visited[] = new int[n];
         for(int i = 0; i < n; i++)
             input[i] = i + 1;
-        
-        return helper_generateTrees(1, n);
+        HashMap<String, List<TreeNode>> outputMap = new HashMap<>();
+        return helper_generateTrees(1, n, outputMap);
     }
-    private List<TreeNode> helper_generateTrees(int startIndex, int lastIndex){
+    private List<TreeNode> helper_generateTrees(int startIndex, int lastIndex, HashMap<String, List<TreeNode>> outputMap){
         List<TreeNode> list = new ArrayList<TreeNode>();
-                System.out.println("start "+startIndex+" end "+lastIndex);
-
+        String key = String.valueOf(startIndex) + String.valueOf(lastIndex);
+        if(outputMap.get(key) != null)
+            return outputMap.get(key);
         if(startIndex > lastIndex)
         {
             list.add(null);
@@ -35,12 +36,13 @@ class Solution {
         if(startIndex == lastIndex)
         {
             list.add( new TreeNode(startIndex));
+            outputMap.put(key, list);
             return list;
         }
         
         for(int i = startIndex; i <= lastIndex; i++){
-            List<TreeNode> leftBranch = helper_generateTrees(startIndex, i - 1);
-            List<TreeNode> rightBranch = helper_generateTrees(i + 1, lastIndex);
+            List<TreeNode> leftBranch = helper_generateTrees(startIndex, i - 1, outputMap);
+            List<TreeNode> rightBranch = helper_generateTrees(i + 1, lastIndex, outputMap);
             for(TreeNode leftNode: leftBranch)
             {    for(TreeNode rightNode: rightBranch)
                 {
@@ -52,6 +54,7 @@ class Solution {
                 }
             }
         }
+        outputMap.put(key, list);
         return list;
         
     }
